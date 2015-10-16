@@ -4,6 +4,7 @@ var express = require('express'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose');
 
+
 var env = process.env.NODE_ENV = process.env.NODE_ENV || 'development';
 
 var app = express();
@@ -27,7 +28,13 @@ app.use(stylus.middleware(
 ));
 app.use(express.static(__dirname + '/public'));
 
-mongoose.connect('mongodb://localhost/mean_practice');
+if(env==='development'){
+  console.log('delelopment mode');
+  mongoose.connect('mongodb://localhost/mean_practice');
+}else {
+  mongoose.connect('mongodb://yuzo:sausi@ds039674.mongolab.com:39674/mean_practice');
+}
+
 var db = mongoose.connection;
 db.on('error', console.error.bind(console, 'connection error...'));
 db.once('open', function callback(){
@@ -38,8 +45,6 @@ var messageSchema = mongoose.Schema({message: String});
 var Message = mongoose.model('Message', messageSchema);
 var mongoMessage;
 Message.findOne().exec(function(err, messageDoc){
-  console.log('message got:' + messageDoc.message);
-
   mongoMessage = messageDoc.message;
 });
 
@@ -53,6 +58,6 @@ app.get('*', function(req, res){
   });
 });
 
-var port = 3030;
+var port = process.env.PORT || 3030;
 app.listen(port);
 console.log('Listening on port ' + port + '...');
