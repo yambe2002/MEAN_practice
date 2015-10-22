@@ -43,18 +43,9 @@ passport.deserializeUser(function(id, done){
   });
 });
 
-//require('./server/config/routes')(app);
 var auth = require('./server/config/auth')
 
-app.get('/partials/*', function(req, res){
-  res.render('../../public/app/' + req.params[0]);
-});
-
-app.post('/login', auth.authenticate);
-
-app.get('*', function(req, res){
-  res.render('index');
-});
+require('./server/config/routes')(app, auth);
 
 app.listen(config.port);
 console.log('Listening on port ' + config.port + '...');
