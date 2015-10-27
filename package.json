@@ -25,6 +25,12 @@
     "stylus": "^0.52.4"
   },
   "devDependencies": {
-    "bower": "~1.6.3"
+    "bower": "~1.6.3",
+    "karma": "^0.13.14",
+    "karma-chai-plugins": "^0.6.0",
+    "karma-chrome-launcher": "^0.2.1",
+    "karma-firefox-launcher": "^0.1.6",
+    "karma-mocha": "^0.2.0",
+    "mocha": "^2.3.3"
   }
 }
